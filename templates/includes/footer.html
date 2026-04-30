@@ -1,0 +1,5 @@
+<footer class="footer">
+  {% if site_settings and site_settings.tagline %}<p>{{ site_settings.tagline }}</p>{% endif %}
+  {% if site_settings and site_settings.contact_email %}<p><a href="mailto:{{ site_settings.contact_email }}">{{ site_settings.contact_email }}</a></p>{% endif %}
+  <p class="keyboard-hint">Press <kbd>h</kbd> for home or <kbd>i</kbd> to search.</p>
+</footer>

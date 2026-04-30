@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Bookmarks{% endblock %}
+
+{% block content %}
+<h1>Bookmarks</h1>
+{% for group in bookmark_groups %}
+  <section>
+    <h2>{{ group.title }}</h2>
+    <ul>
+      {% for bookmark in group.bookmarks.all %}
+        {% if bookmark.is_active %}
+          <li>
+            <a href="{{ bookmark.url }}">{{ bookmark.label }}</a>
+            {% if bookmark.description %}<div class="content">{{ bookmark.description|safe }}</div>{% endif %}
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
+{% empty %}
+  <p>Add bookmark groups in Admin.</p>
+{% endfor %}
+{% endblock %}

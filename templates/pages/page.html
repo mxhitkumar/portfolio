@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.seo_title|default:page.title }}{% endblock %}
+
+{% block content %}
+<article>
+  <header id="single-header">
+    <h1>{{ page.title }}</h1>
+    {% if page.intro %}<p id="subtitle">{{ page.intro }}</p>{% endif %}
+  </header>
+  {% if page.hero_image %}<img class="page-image" src="{{ page.hero_image.url }}" alt="{{ page.title }}">{% endif %}
+  <div class="content">{{ page.body|safe }}</div>
+</article>
+{% endblock %}

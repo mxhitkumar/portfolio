@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% if seo_obj and seo_obj.seo_title %}{{ seo_obj.seo_title }}{% elif site_settings and site_settings.seo_title %}{{ site_settings.seo_title }}{% elif site_settings and site_settings.site_name %}{{ site_settings.site_name }}{% else %}Website{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% if seo_obj and seo_obj.seo_description %}{{ seo_obj.seo_description }}{% elif site_settings and site_settings.seo_description %}{{ site_settings.seo_description }}{% endif %}">
+  {% if seo_obj and seo_obj.seo_keywords %}<meta name="keywords" content="{{ seo_obj.seo_keywords }}">{% elif site_settings and site_settings.seo_keywords %}<meta name="keywords" content="{{ site_settings.seo_keywords }}">{% endif %}
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <meta property="og:title" content="{% if seo_obj and seo_obj.seo_title %}{{ seo_obj.seo_title }}{% elif site_settings and site_settings.site_name %}{{ site_settings.site_name }}{% endif %}">
+  <meta property="og:description" content="{% if seo_obj and seo_obj.seo_description %}{{ seo_obj.seo_description }}{% elif site_settings and site_settings.seo_description %}{{ site_settings.seo_description }}{% endif %}">
+  {% if seo_obj and seo_obj.og_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ seo_obj.og_image.url }}">{% elif site_settings and site_settings.og_image %}<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.og_image.url }}">{% endif %}
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <script defer src="{% static 'js/site.js' %}"></script>
+</head>
+<body>
+  {% include "includes/navbar.html" %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  {% include "includes/footer.html" %}
+</body>
+</html>

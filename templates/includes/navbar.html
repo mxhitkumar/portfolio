@@ -1,0 +1,14 @@
+<nav aria-label="Primary navigation">
+  <ul class="menu">
+    <li><a class="menu-link" href="/">Home</a></li>
+    <li><a class="menu-link" href="{% url 'pages:contact' %}">Contact</a></li>
+    <li><a class="menu-link" href="{% url 'pages:blog' %}">Blog</a></li>
+    <li><a class="menu-link" href="{% url 'pages:work' %}">Work</a></li>
+    <li><a class="menu-link" href="{% url 'pages:bookmarks' %}">Bookmarks</a></li>
+    <li><a class="menu-link" href="{% url 'pages:projects' %}">Projects</a></li>
+    <li><a class="menu-link" href="{% url 'pages:tags' %}">Tags</a></li>
+    {% for item in nav_items %}
+      <li><a class="menu-link" href="{{ item.get_url }}">{{ item.label }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>

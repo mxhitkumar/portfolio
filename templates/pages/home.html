@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ home.seo_title|default:home.hero_title }}{% endblock %}
+
+{% block content %}
+<section class="home-content">
+  <h1>{% if site_settings and site_settings.site_name %}{{ site_settings.site_name }}{% else %}Mohit Kumar{% endif %}</h1>
+  {% if home.hero_subtitle %}
+    <p>{{ home.hero_subtitle }}</p>
+  {% else %}
+    <p>Personal website, writing archive, work notes, and project log.</p>
+  {% endif %}
+  {% if home.cta_text and home.cta_url %}
+    <p><a href="{{ home.cta_url }}">{{ home.cta_text }}</a></p>
+  {% endif %}
+</section>
+
+<form id="search" action="/" method="get" data-search-url="{% url 'pages:search_index' %}">
+  <label class="visually-hidden" for="search-input">Search site</label>
+  <input type="text" id="search-input" name="query" placeholder="search [i] ..." autocomplete="off">
+</form>
+<ul id="results"></ul>
+
+<section>
+  <h2 class="section-title">Blogs</h2>
+  <ul class="post-list">
+    {% for post in posts %}
+      <li>
+        <div class="post-row">
+          <span class="date">{{ post.published_at|date:"M j, Y" }}</span>
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </div>
+      </li>
+    {% empty %}
+      <li>Add blog posts in Admin.</li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% if services %}
+  <section>
+    <h2>Services</h2>
+    <ul>
+      {% for service in services %}
+        <li><strong>{{ service.title }}</strong>: {{ service.short_description }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+{% endblock %}

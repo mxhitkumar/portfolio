@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<h1>Projects</h1>
+{% for project in projects %}
+  <section>
+    <h2>{{ project.title }}</h2>
+    {% if project.image %}<img class="page-image" src="{{ project.image.url }}" alt="{{ project.title }}">{% endif %}
+    <div class="content">{{ project.description|safe }}</div>
+    {% if project.links.all %}
+      <p>
+        {% for link in project.links.all %}
+          <a href="{{ link.url }}">{{ link.label }}</a>{% if not forloop.last %} · {% endif %}
+        {% endfor %}
+      </p>
+    {% endif %}
+  </section>
+{% empty %}
+  <p>Add projects in Admin.</p>
+{% endfor %}
+{% endblock %}

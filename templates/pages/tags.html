@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+<h1>Tags</h1>
+<ul class="terms">
+  {% for tag in tags %}
+    <li id="{{ tag.slug }}">
+      <a href="#{{ tag.slug }}">{{ tag.name }}</a>
+      <ul>
+        {% for post in tag.posts.all %}
+          {% if post.is_published %}
+            <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </li>
+  {% empty %}
+    <li>Add tags in Admin.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

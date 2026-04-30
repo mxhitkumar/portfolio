@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Work{% endblock %}
+
+{% block content %}
+<h1>Work</h1>
+<p class="date">(Last updated on 30/04/2026)</p>
+{% for item in work_items %}
+  <section>
+    <h2>{{ item.company }}</h2>
+    <p><strong>{{ item.role }}</strong> <span class="datesub">{{ item.period }}</span></p>
+    <div class="content">{{ item.details|safe }}</div>
+  </section>
+{% empty %}
+  <p>Add work items in Admin.</p>
+{% endfor %}
+{% endblock %}
