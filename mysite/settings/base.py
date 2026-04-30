@@ -15,10 +15,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    "core",
-    "cms",
-    "pages",
-    "contact",
+    "apps.core.apps.CoreConfig",
+    "apps.cms.apps.CmsConfig",
+    "apps.pages.apps.PagesConfig",
+    "apps.contact.apps.ContactConfig",
 ]
 
 MIDDLEWARE = [
@@ -44,7 +44,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "core.context_processors.global_cms",
+                "apps.core.context_processors.global_cms",
             ],
         },
     },
