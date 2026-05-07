@@ -1,6 +1,5 @@
 import os
 
-import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
 
 from .base import *
@@ -18,14 +17,6 @@ if render_external_hostname and render_external_hostname not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(render_external_hostname)
 
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS", ["https://*.onrender.com"])
-
-database_url = os.environ.get("DATABASE_URL")
-if database_url:
-    DATABASES["default"] = dj_database_url.parse(
-        database_url,
-        conn_max_age=600,
-        ssl_require=database_url.startswith("postgres"),
-    )
 
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 STORAGES = {

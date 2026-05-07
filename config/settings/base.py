@@ -1,8 +1,6 @@
 import os
 from pathlib import Path
 
-import dj_database_url
-
 from config.env import env_bool, env_list, load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -14,6 +12,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "change-me-in-production")
 DEBUG = env_bool("DEBUG", False)
 ALLOWED_HOSTS = env_list("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
+
+sqlite_database_name = Path(os.environ.get("SQLITE_DATABASE_NAME", BASE_DIR / "db.sqlite3"))
+if not sqlite_database_name.is_absolute():
+    sqlite_database_name = BASE_DIR / sqlite_database_name
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -64,17 +66,9 @@ ASGI_APPLICATION = "config.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": sqlite_database_name,
     }
 }
-
-database_url = os.environ.get("DATABASE_URL")
-if database_url:
-    DATABASES["default"] = dj_database_url.parse(
-        database_url,
-        conn_max_age=int(os.environ.get("DATABASE_CONN_MAX_AGE", "0")),
-        ssl_require=env_bool("DATABASE_SSL_REQUIRE", False),
-    )
 
 AUTH_PASSWORD_VALIDATORS = [
     {

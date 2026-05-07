@@ -19,9 +19,9 @@ This project includes `render.yaml`, `build.sh`, `Procfile`, and production sett
 
 1. Push the repository to GitHub.
 2. In Render, create a new Blueprint and select this repository.
-3. Render will use `render.yaml`, generate `SECRET_KEY`, and connect the included PostgreSQL database.
+3. Render will use `render.yaml`, generate `SECRET_KEY`, and attach a persistent disk for SQLite.
 
-The build step installs dependencies, checks the Django project, collects static files, and runs migrations.
+The build step installs dependencies, checks the Django project, and collects static files. The start command runs migrations against the SQLite database on the mounted disk before starting Gunicorn.
 
 Important production environment variables:
 
@@ -30,7 +30,9 @@ DJANGO_SETTINGS_MODULE=config.settings.production
 DEBUG=False
 ALLOWED_HOSTS=.onrender.com
 CSRF_TRUSTED_ORIGINS=https://*.onrender.com
-DATABASE_URL=<Render PostgreSQL connection string>
+SQLITE_DATABASE_NAME=/var/data/db.sqlite3
 ```
 
 For a custom domain, add the domain to `ALLOWED_HOSTS` and add its `https://` origin to `CSRF_TRUSTED_ORIGINS` in Render.
+
+SQLite data is stored under Render's persistent disk mount at `/var/data`. Do not use the free Render instance type for this setup unless you are okay with data loss, because Render's default filesystem is ephemeral without a persistent disk.
