@@ -1,11 +1,19 @@
+import os
 from pathlib import Path
+
+import dj_database_url
+
+from config.env import env_bool, env_list, load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = "change-me-in-production"
-DEBUG = False
-ALLOWED_HOSTS: list[str] = []
-CSRF_TRUSTED_ORIGINS: list[str] = []
+
+load_dotenv(BASE_DIR / ".env")
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "change-me-in-production")
+DEBUG = env_bool("DEBUG", False)
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env_list("CSRF_TRUSTED_ORIGINS")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -60,6 +68,14 @@ DATABASES = {
     }
 }
 
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    DATABASES["default"] = dj_database_url.parse(
+        database_url,
+        conn_max_age=int(os.environ.get("DATABASE_CONN_MAX_AGE", "0")),
+        ssl_require=env_bool("DATABASE_SSL_REQUIRE", False),
+    )
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
@@ -75,16 +91,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
-TIME_ZONE = "Asia/Kolkata"
+LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE", "en-us")
+TIME_ZONE = os.environ.get("TIME_ZONE", "Asia/Kolkata")
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "/static/"
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / os.environ.get("STATIC_ROOT", "staticfiles")
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = os.environ.get("MEDIA_URL", "/media/")
+MEDIA_ROOT = BASE_DIR / os.environ.get("MEDIA_ROOT", "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
