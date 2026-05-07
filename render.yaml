@@ -4,10 +4,10 @@ services:
     runtime: python
     plan: free
     buildCommand: ./build.sh
-    startCommand: gunicorn mysite.wsgi:application
+    startCommand: gunicorn config.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: mysite.settings.production
+        value: config.settings.production
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
