@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: starter
     buildCommand: ./build.sh
-    startCommand: python3 manage.py migrate --no-input && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    startCommand: python3 manage.py migrate --no-input && python3 manage.py seed_portfolio && python3 manage.py ensure_admin && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
     disk:
       name: portfolio-data
       mountPath: /var/data
@@ -32,3 +32,7 @@ services:
         value: "True"
       - key: CSRF_COOKIE_SECURE
         value: "True"
+      - key: DJANGO_SUPERUSER_USERNAME
+        value: admin
+      - key: DJANGO_SUPERUSER_EMAIL
+        value: admin@example.com

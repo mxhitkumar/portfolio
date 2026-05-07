@@ -13,9 +13,18 @@ python3 manage.py migrate
 python3 manage.py runserver
 ```
 
+To populate a fresh database with starter portfolio content:
+
+```bash
+python3 manage.py seed_portfolio
+```
+
 ## Render Deployment
 
 This project includes `render.yaml`, `build.sh`, `Procfile`, and production settings for Render.
+
+See [DEPLOY_RENDER.md](DEPLOY_RENDER.md) for the full deployment checklist.
+For exact Render values to paste, see [RENDER_COPY_PASTE.md](RENDER_COPY_PASTE.md).
 
 1. Push the repository to GitHub.
 2. In Render, create a new Blueprint and select this repository.
