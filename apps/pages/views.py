@@ -29,6 +29,7 @@ class HomeView(TemplateView):
             {
                 "home": home,
                 "seo_obj": home,
+                "page_title": home.seo_title or home.hero_title,
                 "posts": BlogPost.objects.filter(is_published=True).order_by(
                     "-published_at", "-created_at"
                 )[:10],
@@ -42,6 +43,11 @@ class BlogListView(PublishedBlogMixin, ListView):
     template_name = "pages/blog.html"
     context_object_name = "posts"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_title"] = "Blog"
+        return context
+
 
 class BlogDetailView(PublishedBlogMixin, DetailView):
     template_name = "pages/blog_detail.html"
@@ -52,6 +58,7 @@ class BlogDetailView(PublishedBlogMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["seo_obj"] = self.object
+        context["page_title"] = self.object.seo_title or self.object.title
         return context
 
 
@@ -68,6 +75,7 @@ class PageDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["seo_obj"] = self.object
+        context["page_title"] = self.object.seo_title or self.object.title
         return context
 
 
@@ -76,6 +84,7 @@ class WorkView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Work"
         context["work_items"] = WorkItem.objects.filter(is_active=True)
         return context
 
@@ -85,6 +94,7 @@ class ProjectsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Projects"
         context["projects"] = Project.objects.filter(is_active=True).prefetch_related("links")
         return context
 
@@ -94,6 +104,7 @@ class BookmarksView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Bookmarks"
         context["bookmark_groups"] = BookmarkGroup.objects.filter(
             is_active=True
         ).prefetch_related("bookmarks")
@@ -105,6 +116,7 @@ class TagsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Tags"
         context["tags"] = Tag.objects.prefetch_related("posts")
         return context
 
@@ -114,6 +126,7 @@ class ContactView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["page_title"] = "Contact"
         context.setdefault("form", ContactForm())
         context["social_links"] = SocialLink.objects.filter(is_active=True)
         return context

@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block title %}{{ home.seo_title|default:home.hero_title }}{% endblock %}
-
 {% block content %}
 <section class="home-content">
   <h1>{% if site_settings and site_settings.site_name %}{{ site_settings.site_name }}{% else %}Mohit Kumar{% endif %}</h1>
