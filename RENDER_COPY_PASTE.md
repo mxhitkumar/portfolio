@@ -18,10 +18,15 @@ Plan: Starter
 Add this secret environment variable manually in Render:
 
 ```txt
+SECRET_KEY=<generate or paste a long random secret>
 DJANGO_SUPERUSER_PASSWORD=S71PT@@nzah*ZznVrR8D
 ```
 
-Render will generate `SECRET_KEY` automatically from `render.yaml`.
+If Render does not generate `SECRET_KEY` automatically, the deploy will fail with:
+
+```txt
+ImproperlyConfigured: Set SECRET_KEY in the production environment.
+```
 
 ## Manual Web Service Deploy
 
@@ -66,6 +71,7 @@ Paste these environment variables:
 
 ```txt
 DJANGO_SETTINGS_MODULE=config.settings.production
+SECRET_KEY=<generate or paste a long random secret>
 DEBUG=False
 PYTHON_VERSION=3.12.3
 ALLOWED_HOSTS=.onrender.com
@@ -78,12 +84,6 @@ CSRF_COOKIE_SECURE=True
 DJANGO_SUPERUSER_USERNAME=admin
 DJANGO_SUPERUSER_EMAIL=admin@example.com
 DJANGO_SUPERUSER_PASSWORD=S71PT@@nzah*ZznVrR8D
-```
-
-Add `SECRET_KEY` as a secret value:
-
-```txt
-SECRET_KEY=<generate a long random secret>
 ```
 
 You can generate one locally with:
