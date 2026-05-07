@@ -85,10 +85,10 @@ python3 manage.py collectstatic --no-input
 During startup, Render runs:
 
 ```bash
-python3 manage.py migrate --no-input && python3 manage.py seed_portfolio && python3 manage.py ensure_admin && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+./start.sh
 ```
 
-Migrations, seed data, and optional admin setup run at startup because the persistent disk is available at runtime. The seed command is idempotent and does not overwrite content you edit later in Django admin.
+The startup script creates the SQLite/media directories, runs migrations, seeds starter data, optionally creates the admin user, and then starts Gunicorn. These runtime steps happen after the persistent disk is mounted. The seed command is idempotent and does not overwrite content you edit later in Django admin.
 
 To create the admin user automatically on Render, add this secret environment variable in the Render dashboard:
 

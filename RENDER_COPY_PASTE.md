@@ -50,7 +50,7 @@ Plan: Starter
 ### Start Command
 
 ```bash
-python3 manage.py migrate --no-input && python3 manage.py seed_portfolio && python3 manage.py ensure_admin && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+./start.sh
 ```
 
 ### Persistent Disk
@@ -71,7 +71,7 @@ Paste these environment variables:
 
 ```txt
 DJANGO_SETTINGS_MODULE=config.settings.production
-SECRET_KEY=<generate or paste a long random secret>
+SECRET_KEY=CQCxCLr-xSdRcOTXRzBJWLKu-tYNwNg08OBo5oiJ1SQsvpXON4GWUYfGLpZmG0zinUs
 DEBUG=False
 PYTHON_VERSION=3.12.3
 ALLOWED_HOSTS=.onrender.com
