@@ -4,6 +4,7 @@ set -o errexit
 export DJANGO_SETTINGS_MODULE="${DJANGO_SETTINGS_MODULE:-config.settings.production}"
 export PORT="${PORT:-8000}"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
+GUNICORN_BIN="${GUNICORN_BIN:-gunicorn}"
 
 echo "Starting portfolio service..."
 echo "DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}"
@@ -28,4 +29,4 @@ echo "Ensuring admin user..."
 "${PYTHON_BIN}" manage.py ensure_admin
 
 echo "Starting Gunicorn..."
-gunicorn config.wsgi:application --bind "0.0.0.0:${PORT}"
+"${GUNICORN_BIN}" config.wsgi:application --bind "0.0.0.0:${PORT}"

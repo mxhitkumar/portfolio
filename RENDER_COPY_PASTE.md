@@ -55,7 +55,7 @@ Plan: Starter
 
 ### Persistent Disk
 
-Create a persistent disk:
+Optional but recommended for real production data. Create a persistent disk only if your Render plan supports it:
 
 ```txt
 Name: portfolio-data
@@ -63,7 +63,7 @@ Mount Path: /var/data
 Size: 1 GB
 ```
 
-Do not skip the disk. SQLite production data is stored there.
+If you do not create a persistent disk, use the default `data/` values below. The site will deploy, but SQLite/media changes can be lost when Render rebuilds or restarts the service.
 
 ### Environment Variables
 
@@ -76,8 +76,8 @@ DEBUG=False
 PYTHON_VERSION=3.12.3
 ALLOWED_HOSTS=.onrender.com
 CSRF_TRUSTED_ORIGINS=https://*.onrender.com
-SQLITE_DATABASE_NAME=/var/data/db.sqlite3
-MEDIA_ROOT=/var/data/media
+SQLITE_DATABASE_NAME=data/db.sqlite3
+MEDIA_ROOT=data/media
 SECURE_SSL_REDIRECT=True
 SESSION_COOKIE_SECURE=True
 CSRF_COOKIE_SECURE=True
@@ -123,3 +123,18 @@ CSRF_TRUSTED_ORIGINS=https://*.onrender.com,https://yourdomain.com,https://www.y
 ```
 
 Replace `yourdomain.com` with your real domain.
+
+## Paid Persistent Disk Values
+
+Use these only after adding a Render persistent disk mounted at `/var/data`:
+
+```txt
+SQLITE_DATABASE_NAME=/var/data/db.sqlite3
+MEDIA_ROOT=/var/data/media
+```
+
+If you use these values without a disk, Render will show:
+
+```txt
+mkdir: cannot create directory '/var/data': Permission denied
+```

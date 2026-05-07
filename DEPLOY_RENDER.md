@@ -23,7 +23,7 @@ Render's normal service filesystem is ephemeral. This project stores production 
 /var/data
 ```
 
-The production database file is:
+If a persistent disk is attached, the production database file is:
 
 ```bash
 /var/data/db.sqlite3
@@ -35,7 +35,7 @@ Because persistent disks are not available on Render's free web service plan, `r
 plan: starter
 ```
 
-Do not change the service to the free plan unless you are okay with losing production database changes after restarts or deploys.
+If you do not attach a persistent disk, use `SQLITE_DATABASE_NAME=data/db.sqlite3` and `MEDIA_ROOT=data/media`. The service can deploy that way, but database/media changes may be lost after rebuilds or restarts.
 
 ## Deploy With `render.yaml`
 
@@ -57,8 +57,8 @@ DEBUG=False
 PYTHON_VERSION=3.12.3
 ALLOWED_HOSTS=.onrender.com
 CSRF_TRUSTED_ORIGINS=https://*.onrender.com
-SQLITE_DATABASE_NAME=/var/data/db.sqlite3
-MEDIA_ROOT=/var/data/media
+SQLITE_DATABASE_NAME=data/db.sqlite3
+MEDIA_ROOT=data/media
 ```
 
 7. Render will automatically generate `SECRET_KEY`.

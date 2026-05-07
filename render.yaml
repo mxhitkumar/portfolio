@@ -23,9 +23,9 @@ services:
       - key: CSRF_TRUSTED_ORIGINS
         value: https://*.onrender.com
       - key: SQLITE_DATABASE_NAME
-        value: /var/data/db.sqlite3
+        value: data/db.sqlite3
       - key: MEDIA_ROOT
-        value: /var/data/media
+        value: data/media
       - key: SECURE_SSL_REDIRECT
         value: "True"
       - key: SESSION_COOKIE_SECURE

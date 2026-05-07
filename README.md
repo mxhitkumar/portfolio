@@ -39,9 +39,9 @@ DJANGO_SETTINGS_MODULE=config.settings.production
 DEBUG=False
 ALLOWED_HOSTS=.onrender.com
 CSRF_TRUSTED_ORIGINS=https://*.onrender.com
-SQLITE_DATABASE_NAME=/var/data/db.sqlite3
+SQLITE_DATABASE_NAME=data/db.sqlite3
 ```
 
 For a custom domain, add the domain to `ALLOWED_HOSTS` and add its `https://` origin to `CSRF_TRUSTED_ORIGINS` in Render.
 
-SQLite data is stored under Render's persistent disk mount at `/var/data`. Do not use the free Render instance type for this setup unless you are okay with data loss, because Render's default filesystem is ephemeral without a persistent disk.
+For durable SQLite data, attach a Render persistent disk and set `SQLITE_DATABASE_NAME=/var/data/db.sqlite3`. Without a persistent disk, Render's filesystem can be ephemeral.
